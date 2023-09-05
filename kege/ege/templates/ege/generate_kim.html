@@ -1,0 +1,10 @@
+{% load static %}
+
+<input type="text" name="{{ widget.name }}" value="{{ widget.value }}" {% include "django/forms/widgets/attrs.html" %}>
+<button id="{{ widget.name }}-generate" class="number-input-generate">Generate</button>
+
+<script>
+    document.querySelector('#{{ widget.name }}-generate').addEventListener('click', function() {
+        // Обработчик событий для кнопки
+    });
+</script>

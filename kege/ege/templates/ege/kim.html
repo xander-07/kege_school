@@ -1,0 +1,83 @@
+{% load static %}
+<!Doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+              integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'kim/css/kim.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script type="text/javascript" src="{% static 'kim/js/kim.js' %}"></script>
+    <title>KЕГЭ</title>
+</head>
+<body>
+{% for el in variant %}
+<div id="app">
+    <div class="home-wrap">
+        <div class="exam" tabindex="0">
+            <div class="header-wrap">
+                <div class="header">
+                    <div class="time-wrap">
+                        <span class="number">Вариант {{el.id}}</span>
+                        <span class="number">КИМ № {{el.kim}}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="nav-wrap">
+                <div class="nav">
+                    <div>
+                        <p class="ans">Дано ответов</p>
+                        <p class="anscount">0/27</p>
+                        <div class="block arrow">
+                            <p>↑</p>
+                        </div>
+                        <div class="tasks">
+                            <div class="block task-fill">
+                                <p>i</p>
+                            </div>
+                            {% for el in tasks %}
+                            <button id="button-{{forloop.counter}}" class="block task-empty" onclick="showElement('my-element-{{forloop.counter}}')"><p>{{forloop.counter}}</p></button>
+<!--                            <div class="block task-empty">-->
+
+<!--&lt;!&ndash;                                <p>{{forloop.counter}}</p>&ndash;&gt;-->
+<!--                            </div>-->
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="arrow-wrap arrow-left">
+                <div class="arrow-strelka">
+                    <p>←</p>
+                </div>
+            </div>
+
+
+            <div class="task-wrap">
+                {% for el in tasks %}
+                <div class="task" id="my-element-{{forloop.counter}}" style="display: none;">
+                    <div class="text">
+                        <div class="text-bolder">
+                            Задание {{forloop.counter}} <span>(#{{el.id}})</span>
+                        </div>
+                        {{el.content|safe}}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="arrow-wrap arrow-right">
+                <div class="arrow-strelka">
+                    <p>→</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

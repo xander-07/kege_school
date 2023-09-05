@@ -1,0 +1,7 @@
+<h1>Изменение имени пользователя</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="username">Новое имя пользователя:</label>
+    <input type="text" name="username" id="username" value="{{ user.username }}">
+    <button type="submit">Изменить имя пользователя</button>
+  </form>

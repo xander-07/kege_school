@@ -1,0 +1,7 @@
+<h1>Изменение адреса электронной почты</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="email">Новый адрес электронной почты:</label>
+    <input type="email" name="email" id="email" value="{{ user.email }}">
+    <button type="submit">Изменить email</button>
+  </form>

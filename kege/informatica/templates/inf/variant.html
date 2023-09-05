@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'variant/css/variant.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script type="text/javascript" src="{% static 'variant/js/variant.js' %}"></script>
+    <title>KЕГЭ</title>
+</head>
+<body>
+
+<div id="app">
+    <div class="home-wrap">
+        <div class="exam" tabindex="0">
+            <div class="header-wrap">
+                <div class="header">
+                    <div class="time-wrap">
+                        <!--                        <span class="number">Вариант {{el.id}}</span>-->
+                        <span class="number">КИМ № {{ generated_task.kim }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-wrap">
+                <div class="nav">
+                    <div>
+                        <p class="ans">Дано ответов</p>
+                        <p class="anscount">0/{{ tasks|length }}</p>
+                    </div>
+                    <div class="block arrow arrow-up">
+                        <p>↑</p>
+                    </div>
+                    <div class="navigation">
+                        <ul>
+                            {% for task in tasks %}
+                            {% if forloop.counter == 1 %}
+                            <li>
+                                <button id="button-{{forloop.counter}}" class="block task-empty task-current"
+                                        onclick="showElement('my-element-{{forloop.counter}}')"><p>
+                                    {{forloop.counter}}</p>
+                                </button>
+                            </li>
+                            {% else %}
+                            <li>
+                                <button id="button-{{forloop.counter}}" class="block task-empty"
+                                        onclick="showElement('my-element-{{forloop.counter}}')"><p>
+                                    {{forloop.counter}}</p>
+                                </button>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!--                    <div class="tasks">-->
+
+                    <!--                    </div>-->
+                    <div class="block arrow arrow-down">
+                        <p>↓</p>
+                    </div>
+                </div>
+            </div>
+            <div class="arrow-wrap arrow-left">
+                <div class="arrow-strelka">
+                    <p>←</p>
+                </div>
+            </div>
+
+
+            <div class="task-wrap">
+                {% for task in tasks %}
+                {% if forloop.counter == 1 %}
+                <div class="task" id="my-element-{{forloop.counter}}" style="display: block;">
+                    <div class="text">
+                        <div class="text-bolder">
+                            Задание {{forloop.counter}} <span>(#{{task.id}})</span>
+                        </div>
+                        {{task.questions|safe}}
+                    </div>
+                </div>
+                {% else %}
+                <div class="task" id="my-element-{{forloop.counter}}" style="display: none;">
+                    <div class="text">
+                        <div class="text-bolder">
+                            Задание {{forloop.counter}} <span>(#{{task.id}})</span>
+                        </div>
+                        {{task.questions|safe}}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="arrow-wrap arrow-right">
+                <div class="arrow-strelka">
+                    <p>→</p>
+                </div>
+            </div>
+
+            <div class="footer-wrap">
+                <div class="footer">
+                    <div class="files">
+                        <a href=""><img src="{% static 'variant/img/dl.png' %}" alt="">{{ tasks.files_1 }}</a>
+                        <!--                            <button type="button" class="save">Сохранить ответ</button>-->
+                    </div>
+                    <div>
+                        <div class="files">
+
+                        </div>
+                        <div class="answer">
+                            <input type="text" class="input">
+                            <input type="button" class="save" value="Сохранить ответ">
+                            <!--                            <button type="button" class="save">Сохранить ответ</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

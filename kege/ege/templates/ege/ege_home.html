@@ -1,0 +1,22 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}КЕГЭ{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1 class="title_ege_home">КЕГЭ</h1>
+        <p class="lead">Демонстрационная версия ЕГЭ позволяет проводить тренировку экзамена по Информатике и ИКТ в компьютерной форме (КЕГЭ).</p>
+        {% if variant %}
+        {% for el in variant %}
+            <div class="alert alert-warning">
+                <h3>{{el.title}}</h3>
+                <p>KIM: {{el.kim}}</p>
+                <p>Дата создания: {{el.time_create}}</p>
+                <a href="{% url 'variant-detail' el.id %}" class="btn btn-warning">Решать</a>
+            </div>
+        {% endfor %}
+        {% else %}
+            <p>Пока нет открытых или персональных вариантов</p>
+        {% endif %}
+    </div>
+{% endblock %}
