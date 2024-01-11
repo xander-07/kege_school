@@ -6,6 +6,8 @@ from .models import CustomUser, UserProfile
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
+from django.contrib.auth import get_user_model
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -14,6 +16,7 @@ class CustomUserCreationForm(UserCreationForm):
                   'birthday']
 
     def clean(self):
+        cleaned_data = super().clean()
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password1')
 
@@ -22,7 +25,7 @@ class CustomUserCreationForm(UserCreationForm):
             if user:
                 raise forms.ValidationError(
                     'Пользователь с таким именем пользователя или электронной почтой уже существует')
-        return self.cleaned_data
+        return cleaned_data
 
 
 class CustomUserChangeForm(UserChangeForm):
@@ -41,30 +44,33 @@ class UserProfileForm(ModelForm):
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(label='Имя пользователя / Email', max_length=254)
 
-    def confirm_login_allowed(self, user):
-        if not user.is_active:
-            raise forms.ValidationError(
-                'Этот аккаунт заблокирован.',
-                code='inactive',
-            )
+    error_messages = {
+        'invalid_login': (
+            "Неверно введен логин или пароль."
+        ),
+        'inactive': "Этот аккаунт заблокирован.",
+    }
 
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
-        profile_form = None
 
-        if username and password:
-            user = CustomUser.objects.filter(Q(username=username) | Q(email=username)).first()
-            if user:
-                if not user.check_password(password):
-                    raise forms.ValidationError('Неверный пароль')
-            else:
-                raise forms.ValidationError('Пользователь с таким именем пользователя или электронной почтой не найден')
+        user = CustomUser.objects.filter(Q(username=username) | Q(email=username)).first()
+
+        if user is None:
+            raise forms.ValidationError('Пользователь с таким именем пользователя или электронной почтой не найден')
+
+        if not user.check_password(password):
+            raise forms.ValidationError('Неверно введен логин или пароль.', code='invalid_login')
+
+        if not user.is_active:
+            raise forms.ValidationError('Этот аккаунт заблокирован.', code='inactive')
 
         return cleaned_data
 
 
+# Если что верни тут form-control
 class CustomUserUpdateForm(ModelForm):
     first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'form-control'}))

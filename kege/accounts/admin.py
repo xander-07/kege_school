@@ -8,19 +8,19 @@ from .models import CustomUser, UserProfile
 class CustomUserAdmin(BaseUserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    list_display = ('get_full_name', 'username', 'email', 'is_active', 'is_staff', 'last_login')
+    list_display = ('get_full_name', 'username', 'email', 'is_active', 'is_staff', 'is_confirmed', 'last_login')
     ordering = ('email',)
     search_fields = ('email',)
-    list_filter = ('is_active', 'is_staff')
+    list_filter = ('is_active', 'is_staff', 'is_confirmed')
     filter_horizontal = ()
     fieldsets = (
         (None, {'fields': ('username', 'email', 'first_name', 'last_name', 'middle_name', 'class_number', 'class_letter', 'birthday', 'password', 'last_login')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_confirmed', 'is_superuser')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_active', 'is_staff'),
+            'fields': ('email', 'password1', 'password2', 'is_active', 'is_staff', 'is_confirmed'),
         }),
     )
 

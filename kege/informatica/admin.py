@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, GeneratedTask
+from .models import Task, GeneratedTask, UserAnswers
 
 class TaskAdmin(admin.ModelAdmin):
     pass
@@ -8,16 +8,16 @@ class TaskAdmin(admin.ModelAdmin):
 class GeneratedTaskAdmin(admin.ModelAdmin):
     filter_horizontal = ('tasks',)
     search_fields = ['kim']
-    list_display = ('id', 'kim', 'is_published', 'Tasks', 'time_create', 'time_update')
+    list_display = ('id', 'kim', 'is_published', 'Tasks', 'time_create', 'time_update', 'time')
 
     readonly_fields = ['kim', 'time_create', 'time_update']
     fieldsets = (
         (None, {
-            'fields': ('tasks', 'is_published', 'title', )
+            'fields': ('tasks', 'is_published', 'title', 'time')
         }),
         ('Дополнительно', {
-            'fields': ('kim', 'time_create', 'time_update'),
-            'classes': ('collapse', 'collapse', 'collapse')
+            'fields': ('kim', 'time_create', 'time_update', 'files_1'),
+            'classes': ('collapse', 'collapse', 'collapse', 'collapse')
         }),
     )
 
@@ -84,4 +84,12 @@ admin.site.register(Task, TaskAdmin)
 
 # admin.site.register(Task, TaskAdmin)  # удалите эту строку
 # admin.site.register(GeneratedTask, GeneratedTaskAdmin)  # удалите эту строку
+
+
+@admin.register(UserAnswers)
+class UserAnswersAdmin(admin.ModelAdmin):
+    list_display = ('id','user', 'user_full_name', 'answer', 'id_kim', 'kim', 'time', 'ball')
+    search_fields = ['user__username', 'user_full_name', 'kim']
+
+
 

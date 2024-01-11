@@ -2,6 +2,7 @@ from django.db import models
 from ckeditor.fields import RichTextField
 import random
 from django.core.exceptions import ValidationError
+from accounts.models import CustomUser
 
 
 class Task(models.Model):
@@ -44,7 +45,8 @@ class Task(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название', blank=True, null=True)
     description = models.CharField(verbose_name='Описание', max_length=255)
     questions = RichTextField('Задание')
-    linked_task = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, verbose_name='К заданию (прикрепить)')
+    linked_task = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True,
+                                    verbose_name='К заданию (прикрепить)')
     level = models.CharField('Уровень сложности', max_length=50, choices=LEVEL, null=True)
     # answers = models.CharField(verbose_name='Ответ')
     answer_1 = models.CharField('Ответ на задание (основной)', max_length=120, null=True)
@@ -108,6 +110,8 @@ class GeneratedTask(models.Model):
     title = models.CharField(max_length=255, verbose_name="Отображаемое название", null=True, blank=True)
     time_create = models.DateTimeField('Дата создания', auto_now_add=True, null=True)
     time_update = models.DateTimeField('Дата обновления', auto_now=True, null=True)
+    time = models.IntegerField('Время на выполнение варианта в минутах',null=True, blank=True, default=235)
+    files_1 = models.FileField('Картинка', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.kim:
@@ -124,6 +128,31 @@ class GeneratedTask(models.Model):
     # def __str__(self):
     #     return self.kim
 
+
 def generate_kim():
     return str(random.randint(10000000, 99999999))
 
+
+class UserAnswers(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    user_full_name = models.CharField(max_length=255, null=True, blank=True)
+    answer = models.TextField(null=True, blank=True)
+    id_question = models.IntegerField(null=True, blank=True)
+    id_kim = models.IntegerField(null=True, blank=True)
+    kim = models.CharField(max_length=255, null=True, blank=True)
+    time = models.IntegerField(null=True, blank=True)
+    ball = models.IntegerField(null=True, blank=True)
+    finished = models.BooleanField(default=False, null=True, blank=True)
+    id_attempt = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'ответ пользователя'
+        verbose_name_plural = 'ответы пользователей'
+
+
+class Attempt(models.Model):
+    id_kim = models.IntegerField()
+    time = models.IntegerField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    fullname = models.CharField(max_length=255)
+    finished = models.BooleanField(default=False)

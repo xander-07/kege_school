@@ -1,31 +1,97 @@
-{% extends 'main/layout.html' %}
+{% load static %}
+{% if user.is_authenticated is False %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Авторизация</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&family=Montserrat+Alternates:wght@100;200;300;400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'main/js/main.js' %}" defer></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/img/logo.ico' %}">
+</head>
+<body>
+<div class="container">
+    <a href="{% url 'home' %}" class="back-btn">
+        <img src="{% static '/accounts/img/arrow-left.svg' %}" alt="" class="back-btn--trey">
+    </a>
 
-{% block title %}Войти{% endblock %}
-{% block content %}
-<div class="features">
-    <div class="col-12 d-flex justify-content-center align-items-center">
-        <div class="col-3 p-3">
-            <h2 class="h3 mb-3 fw-normal">Вход</h2>
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="{{ form.username.id_for_label }}"
-                           name="{{ form.username.html_name }}" value="{{ form.username.value|default_if_none:'' }}"
-                           required>
-                    <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя</label>
-
+    <!--        {{ form.as_p }}-->
+    <section class="login-card">
+        <img src="{% static 'accounts/img/login_cover.svg' %}" alt="" srcset="" class="login-card--cover-login">
+        <div class="login-card--user-information">
+            <div class="wrapper-logo-registration">
+                <div class="wrapper-logo">
+                    <img src="{% static 'main/img/logo.svg' %}">
+                    <h1 class="header__text-logo">Komp_EGE</h1>
                 </div>
-                <div class="form-floating mt-2">
+                <p class="header--text--down">Авторизация</p>
+            </div>
+            <div class="login-card-user">
+                <form method="post" class="login-card--login-form">
+                    {% csrf_token %}
 
-                    <input type="password" class="form-control" id="{{ form.password.id_for_label }}"
-                           name="{{ form.password.html_name }}" required>
-                    <label for="{{ form.password.id_for_label }}" class="form-label">Пароль</label>
-                </div>
+                    <div>
+                        <label for="{{ form.username.id_for_label }}">Логин:</label>
+                        <input type="text" class="login-card-user--input" id="{{ form.username.id_for_label }}"
+                               name="{{ form.username.html_name }}"
+                               value="{{ form.username.value|default_if_none:'' }}" required tabindex="1">
+                    </div>
 
-                <button type="submit" class="btn btn-primary mt-3">Войти</button>
-            </form>
-            <p id="error-message" class="error-message"></p>
+                    <div>
+                        <label for="{{ form.password.id_for_label }}">Пароль:</label>
+                        <input type="password" class="login-card-user--input" id="{{ form.password.id_for_label }}"
+                               name="{{ form.password.html_name }}"
+                               value="{{ form.password.value|default_if_none:'' }}" required tabindex="2">
+                    </div>
+
+                    <button type="submit" class="login-card--login-btn">Войти</button>
+                </form>
+
+                {% if form.non_field_errors %}
+                <ul class="messages">
+                    {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
         </div>
-    </div>
+    </section>
 </div>
-{% endblock %}
+</body>
+</html>
+{% endif %}
+
+<!--<div class="features">-->
+<!--    <div class="col-12 d-flex justify-content-center align-items-center">-->
+<!--        <div class="col-3 p-3">-->
+<!--            <h2 class="h3 mb-3 fw-normal">Вход</h2>-->
+<!--            <form method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <div class="form-floating">-->
+<!--                    <input type="text" class="form-control" id="{{ form.username.id_for_label }}"-->
+<!--                           name="{{ form.username.html_name }}" value="{{ form.username.value|default_if_none:'' }}"-->
+<!--                           required>-->
+<!--                    <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя</label>-->
+
+<!--                </div>-->
+<!--                <div class="form-floating mt-2">-->
+
+<!--                    <input type="password" class="form-control" id="{{ form.password.id_for_label }}"-->
+<!--                           name="{{ form.password.html_name }}" required>-->
+<!--                    <label for="{{ form.password.id_for_label }}" class="form-label">Пароль</label>-->
+<!--                </div>-->
+
+<!--                <button type="submit" class="btn btn-primary mt-3">Войти</button>-->
+<!--            </form>-->
+<!--            <p id="error-message" class="error-message"></p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->

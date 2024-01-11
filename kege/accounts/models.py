@@ -1,9 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import uuid
 
 
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=30, unique=True, null=False)
+    token = models.UUIDField(default=uuid.uuid4, editable=False)
+    is_confirmed = models.BooleanField('Подтверждение почты',default=False)
     email = models.EmailField('Электронная почта', unique=True)
     first_name = models.CharField('Имя', max_length=30)
     last_name = models.CharField('Фамилия', max_length=30)

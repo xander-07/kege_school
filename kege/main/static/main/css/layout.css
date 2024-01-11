@@ -1,0 +1,118 @@
+body {
+    font-family: 'Maven Pro', sans-serif;
+}
+
+.container {
+    max-width: 1440px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 36px;
+}
+
+.header--logo {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+}
+
+.header__text-logo {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 32px;
+    font-weight: 500;
+    color: #313273;
+}
+
+.header--list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+
+    :hover {
+        cursor: pointer;
+    }
+}
+
+.header--item--link {
+    text-decoration: none;
+    color: #111111;
+}
+
+.header--item:not(:last-child) {
+    margin-right: 52px;
+}
+
+.wrapper-user {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    margin-left: 10px;
+}
+
+.header--login--btn {
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #DC4298;
+
+    border-radius: 8px;
+    border: 1px solid #DC4298;
+    background-color: #FFF;
+
+}
+
+.header--login--btn:hover {
+    background-color: #DC4298;
+    color: #FFF;
+
+    transition: background-color 500ms;
+}
+
+
+/*Меню пользователя*/
+.wrapper-user {
+    /*position: absolute;*/
+    /*display: inline-block;*/
+}
+
+.header--dropdown-menu--content {
+    position: absolute;
+    display: none;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.header--dropdown-menu--content a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: black;
+    background-color: #FFF;
+}
+
+.header--dropdown-menu--content a:hover {
+    background-color: #ddd;
+}
+
+.header--dropdown-menu:hover .header--dropdown-menu--content {
+    display: block;
+    animation: display 2s;
+}
+
+
+
+
+

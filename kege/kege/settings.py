@@ -26,6 +26,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -109,6 +111,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Используем SMTP для отправки почты
+EMAIL_HOST = 'mail.kompschool.ru'  # Адрес вашего SMTP-сервера
+EMAIL_PORT = 587  # Порт SMTP-сервера (обычно 587 для TLS, 465 для SSL)
+EMAIL_USE_TLS = True  # Используйте TLS для безопасной передачи данных
+EMAIL_USE_SSL = False  # Используйте SSL (если EMAIL_USE_TLS установлено в False)
+EMAIL_HOST_USER = 'noreply@kompschool.ru'  # Ваш электронный адрес
+EMAIL_HOST_PASSWORD = 'yN5dR1xA3tiI1hL1'  # Пароль от вашего электронного адреса
+
+# Отправитель по умолчанию для писем
+DEFAULT_FROM_EMAIL = 'noreply@kompschool.ru'
+SERVER_EMAIL = 'noreply@kompschool.ru'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -123,8 +138,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -132,10 +147,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    # BASE_DIR / "static",
 ]
 
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -146,4 +161,3 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 AUTH_USER_MODEL = 'accounts.CustomUser'
-

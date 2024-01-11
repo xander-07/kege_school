@@ -1,12 +1,36 @@
 {% extends 'main/layout.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+{% endblock %}
 
 {% block title %}Главна страница{% endblock %}
 
 {% block content %}
-    <div class="features">
-        <h1>Главная страница</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aperiam consequatur facere minima nam non, odio odit omnis quam quia quibusdam quo rerum tempore ut vel veniam, vero voluptate.</p>
-        <p>На сайте ведутся технические работы</p>
-        <button class="btn btn-info" type="button">Обновить страницу</button>
+<section class="main-section">
+    <div class="main-section--information">
+        <h2 class="main-section--header-section">
+            Демонстрационный экзамен по информатике в формате ЕГЭ
+        </h2>
+        <p class="main-section--text">
+            Хочешь написать экзамен на высокий балл? Попробуй свои силы в тренировочном ЕГЭ и узнай где есть пробелы.
+            <br>
+            <p>Для прохождения тренировочного ЕГЭ необходимо зарегистрироваться на сайте.</p>
+        </p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'inf_home' %}" class="main-section--button-registration">Тренировочное ЕГЭ</a>
+        {% else %}
+        <a href="{% url 'register' %}" class="main-section--button-registration">Зарегистрироваться</a>
+        {% endif %}
     </div>
+    <img src="{% static 'main/img/main_slide.svg' %}" alt="" class="main-section--left--slide">
+</section>
+
+
+<!--    <div class="features">-->
+<!--        <h1>Главная страница</h1>-->
+<!--        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aperiam consequatur facere minima nam non, odio odit omnis quam quia quibusdam quo rerum tempore ut vel veniam, vero voluptate.</p>-->
+<!--        <p>На сайте ведутся технические работы</p>-->
+<!--        <button class="btn btn-info" type="button">Обновить страницу</button>-->
+<!--    </div>-->
 {% endblock %}

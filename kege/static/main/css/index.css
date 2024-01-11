@@ -1,0 +1,49 @@
+.main-section{
+    display: flex;
+    flex: 1 1 0;
+    margin-top: 77px;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.main-section--right{
+    /*width: 50%;*/
+    display: flex;
+    margin-right: 95px;
+}
+
+.main-section--header-section{
+    padding: 0 0 20px 0;
+    margin: 0;
+    font-size: 65px;
+    font-weight: 800;
+
+    background-image: url("/static/main/img/line_down_text.svg");
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+}
+
+.main-section--text{
+    width: 80%;
+    margin-top: 45px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.main-section--text p{
+    font-size: 16px;
+}
+
+.main-section--button-registration{
+    display: inline-block;
+    margin-top: 15px;
+    padding: 22px 40px;
+
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #FFF;
+
+    border-radius: 6px;
+    background-color: #DC4298;
+}

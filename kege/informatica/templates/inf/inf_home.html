@@ -1,25 +1,57 @@
 {% extends 'main/layout.html' %}
-
+{% load static %}
 {% block title %}КЕГЭ{% endblock %}
 
-{% block content %}
-<div class="features">
-    <h1 class="title_ege_home">КЕГЭ</h1>
-    <p class="lead">Демонстрационная версия ЕГЭ позволяет проводить тренировку экзамена по Информатике и ИКТ в
-        компьютерной форме (КЕГЭ).</p>
-    {% if variant %}
-    {% for el in variant %}
-    <div class="alert alert-warning">
-        <h3>{{el.title}}</h3>
-        <p>KIM: {{el.kim}}</p>
-        <p>Дата создания: {{el.time_create}}</p>
-        <a href="{% url 'generated_task_detail' el.kim %}" class="btn btn-warning">Решать</a>
-    </div>
-    {% endfor %}
-    {% else %}
-    <p>Пока нет открытых или персональных вариантов</p>
-    {% endif %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'inf/css/inf.css' %}">
+{% endblock %}
 
-    <a href="{% url 'generate_variant' %}">Создать вариант КИМ</a>
+{% block content %}
+{% if not messages %}
+<h1 class="title_ege_home">ЕГЭ в компьютерной форме</h1>
+
+{% if variant %}
+<ul class="cards-list">
+    {% for el in variant %}
+    <li class="cards-item">
+        {% if el.files_1 %}
+        <img src="{{ el.files_1.url }}" class="cards-item--img">
+        {% else %}
+        <img src="{% static 'inf/img/base.jpg' %}" class="cards-item--img">
+        {% endif %}
+        <div class="cards-item--bottom">
+            <h3>{{el.title}}</h3>
+            <p>KIM: {{el.kim}}</p>
+            <p>Дата создания: {{el.time_create}}</p>
+            <a href="{% url 'generated_task_detail' el.kim %}" class="btn btn-warning">Решать</a>
+        </div>
+    </li>
+    {% endfor %}
+
+    <li class="cards-item">
+        <img src="{% static 'inf/img/base.jpg' %}" class="cards-item--img">
+        <div class="cards-item--bottom">
+            <a href="{% url 'generate_variant' %}" class="btn btn-warning">Создать вариант КИМ</a>
+        </div>
+    </li>
+</ul>
+{% endif %}
+
+<!--<a href="{% url 'generate_variant' %}">Создать вариант КИМ</a>-->
+
+<!--    <p class="lead">Демонстрационная версия ЕГЭ позволяет проводить тренировку экзамена по Информатике и ИКТ в-->
+<!--        компьютерной форме (КЕГЭ).</p>-->
+
+
+{% endif %}
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="massages {{ message.tags }}" role="alert">
+    {{ message }}
 </div>
+{% endfor %}
+{% endif %}
+
 {% endblock %}
